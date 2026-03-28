@@ -1,9 +1,5 @@
 import { Users, Target, Rocket, GraduationCap, Award, Globe2, Code2, LineChart, Briefcase } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import imgFullstack from 'C:/Users/Legend/.gemini/antigravity/brain/08f1e698-868f-45d5-8533-b27aefd6eb94/profesor_fullstack_1774717806955.png';
-import imgData from 'C:/Users/Legend/.gemini/antigravity/brain/08f1e698-868f-45d5-8533-b27aefd6eb94/profesora_data_1774717822353.png';
-import imgUx from 'C:/Users/Legend/.gemini/antigravity/brain/08f1e698-868f-45d5-8533-b27aefd6eb94/profesora_ux_1774717837660.png';
-import imgBackend from 'C:/Users/Legend/.gemini/antigravity/brain/08f1e698-868f-45d5-8533-b27aefd6eb94/profesor_backend_1774717852914.png';
 
 export default function Nosotros() {
   const stats = [
@@ -36,25 +32,25 @@ export default function Nosotros() {
       name: "Martín Sandoval",
       role: "Lead Full Stack",
       company: "Ex-Mercado Free",
-      image: imgFullstack
+      image: "/teachers/profesor_fullstack.png"
     },
     {
       name: "Lucía Fernández",
       role: "Data Science Mentor",
       company: "Data Engineer en Vualá",
-      image: imgData
+      image: "/teachers/profesora_data.png"
     },
     {
       name: "Carolina Vega",
       role: "Head de UX/UI",
       company: "Product Design Lead",
-      image: imgUx
+      image: "/teachers/profesora_ux.png"
     },
     {
       name: "Roberto Ledesma",
       role: "Backend & Cloud",
       company: "Senior Arch en PedidosNow",
-      image: imgBackend
+      image: "/teachers/profesor_backend.png"
     }
   ];
 
