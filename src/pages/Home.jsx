@@ -1,9 +1,11 @@
 import { ArrowRight, Zap, PlayCircle, Star, ShieldCheck, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useEmblaCarousel from 'embla-carousel-react';
 import { useCallback } from 'react';
+import { cursosData } from '../data/cursos';
 
 export default function Home() {
+  const navigate = useNavigate();
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'start' });
 
   const scrollPrev = useCallback(() => {
@@ -13,6 +15,17 @@ export default function Home() {
   const scrollNext = useCallback(() => {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
+
+  const getFeaturedCourse = (id, icon, themeClasses) => {
+    const course = cursosData.find(c => c.id === id);
+    return { ...course, targetIcon: icon, themeClasses };
+  };
+
+  const featuredList = [
+    getFeaturedCourse('react-js', <Zap className="h-6 w-6" />, { iconBg: 'bg-indigo-50', iconText: 'text-primary-600', hoverBg: 'group-hover:bg-primary-600' }),
+    getFeaturedCourse('growth-marketing', <Zap className="h-6 w-6" />, { iconBg: 'bg-emerald-50', iconText: 'text-emerald-600', hoverBg: 'group-hover:bg-emerald-600' }),
+    getFeaturedCourse('backend-node', <ShieldCheck className="h-6 w-6" />, { iconBg: 'bg-blue-50', iconText: 'text-blue-600', hoverBg: 'group-hover:bg-blue-600' })
+  ];
 
   return (
     <main className="flex-1 flex flex-col">
@@ -72,18 +85,18 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-transparent pointer-events-none" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
           <p className="text-center text-xs font-bold text-slate-500 uppercase tracking-[0.2em] mb-8">Nuestros egresados aceleran su carrera en</p>
-          <div className="flex flex-wrap justify-center gap-10 sm:gap-24 opacity-60">
-            <div className="flex items-center justify-center group">
-              <span className="text-2xl font-black tracking-tighter text-white transition-opacity group-hover:opacity-100">Mercado Free</span>
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-12 lg:gap-24 opacity-60 px-4">
+            <div className="flex items-center justify-center group cursor-default">
+              <span className="text-xl sm:text-2xl font-black tracking-tighter text-white transition-opacity group-hover:opacity-100">Mercado Free</span>
             </div>
-            <div className="flex items-center justify-center group">
-               <span className="text-2xl font-black tracking-tight text-white transition-opacity group-hover:opacity-100">Market Libre</span>
+            <div className="flex items-center justify-center group cursor-default">
+               <span className="text-2xl sm:text-3xl font-black tracking-tight text-white transition-opacity group-hover:opacity-100 lowercase">vualá</span>
             </div>
-            <div className="flex items-center justify-center group">
-               <span className="text-2xl font-black italic text-white transition-opacity group-hover:opacity-100">GloboTech</span>
+            <div className="flex items-center justify-center group cursor-default">
+               <span className="text-xl sm:text-2xl font-extrabold italic tracking-tight text-white transition-opacity group-hover:opacity-100">GloboTech</span>
             </div>
-            <div className="hidden sm:flex items-center justify-center group">
-               <span className="text-2xl font-bold tracking-widest text-white transition-opacity group-hover:opacity-100 uppercase">AwaZon</span>
+            <div className="flex items-center justify-center group cursor-default">
+               <span className="text-xl sm:text-2xl font-black tracking-tighter text-white transition-opacity group-hover:opacity-100">Pedidos<span className="font-normal italic">Now</span></span>
             </div>
           </div>
         </div>
@@ -102,93 +115,39 @@ export default function Home() {
           </div>
           
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {/* Offer Card 1 */}
-            <div className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-primary-500/10">
-              <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary-500 to-blue-500 transform origin-left scale-x-0 transition-transform group-hover:scale-x-100" />
-              <div className="absolute top-6 right-6 rounded-full bg-red-100 px-3 py-1 text-xs font-black tracking-wide text-red-600 line-through">
-                -40% OFF
-              </div>
-              
-              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-primary-600 group-hover:bg-primary-600 group-hover:text-white transition-colors">
-                <Zap className="h-6 w-6" />
-              </div>
-              
-              <h3 className="text-2xl font-bold text-slate-900">React Avanzado</h3>
-              <p className="mt-3 flex-1 text-slate-500 leading-relaxed">Dominá el framework más popular creando aplicaciones escalables del mundo real.</p>
-              
-              <div className="mt-8 border-t border-slate-100 pt-6">
-                <div className="flex items-end justify-between">
-                  <div>
-                     <div className="text-sm font-medium text-slate-400 line-through mb-1">AR$ 150.000</div>
-                     <div className="flex items-center gap-2">
-                       <span className="text-3xl font-black text-slate-900">AR$ 90.000</span>
-                     </div>
+            {featuredList.map((curso, idx) => (
+              <div 
+                key={idx} 
+                onClick={() => navigate(`/cursos/${curso.id}`)}
+                className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-primary-500/10"
+              >
+                <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary-500 to-blue-500 transform origin-left scale-x-0 transition-transform group-hover:scale-x-100" />
+                <div className="absolute top-6 right-6 rounded-full bg-red-100 px-3 py-1 text-xs font-black tracking-wide text-red-600 line-through">
+                  -{curso.discount}% OFF
+                </div>
+                
+                <div className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl ${curso.themeClasses.iconBg} ${curso.themeClasses.iconText} ${curso.themeClasses.hoverBg} group-hover:text-white transition-colors`}>
+                  {curso.targetIcon}
+                </div>
+                
+                <h3 className="text-2xl font-bold text-slate-900">{curso.title}</h3>
+                <p className="mt-3 flex-1 text-slate-500 leading-relaxed">{curso.shortDescription}</p>
+                
+                <div className="mt-8 border-t border-slate-100 pt-6">
+                  <div className="flex items-end justify-between">
+                    <div>
+                       <div className="text-sm font-medium text-slate-400 line-through mb-1">AR$ {curso.originalPrice.toLocaleString('es-AR')}</div>
+                       <div className="flex items-center gap-2">
+                         <span className="text-3xl font-black text-slate-900">AR$ {curso.price.toLocaleString('es-AR')}</span>
+                       </div>
+                    </div>
+                    <Link to={`/cursos/${curso.id}`} className={`flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-600 ${curso.themeClasses.hoverBg} group-hover:text-white transition-colors`}>
+                      <ArrowRight className="h-5 w-5" />
+                    </Link>
                   </div>
-                  <button className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-600 group-hover:bg-primary-600 group-hover:text-white transition-colors">
-                    <ArrowRight className="h-5 w-5" />
-                  </button>
                 </div>
               </div>
-            </div>
-
-            {/* Offer Card 2 */}
-            <div className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-primary-500/10">
-              <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary-500 to-blue-500 transform origin-left scale-x-0 transition-transform group-hover:scale-x-100" />
-              <div className="absolute top-6 right-6 rounded-full bg-red-100 px-3 py-1 text-xs font-black tracking-wide text-red-600 line-through">
-                -30% OFF
-              </div>
-              
-              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                <Zap className="h-6 w-6" />
-              </div>
-              
-              <h3 className="text-2xl font-bold text-slate-900">Growth Marketing</h3>
-              <p className="mt-3 flex-1 text-slate-500 leading-relaxed">Aumentá las métricas y escalá tu negocio usando estrategias basadas en experimentación y datos rápidos.</p>
-              
-              <div className="mt-8 border-t border-slate-100 pt-6">
-                <div className="flex items-end justify-between">
-                  <div>
-                     <div className="text-sm font-medium text-slate-400 line-through mb-1">AR$ 120.000</div>
-                     <div className="flex items-center gap-2">
-                       <span className="text-3xl font-black text-slate-900">AR$ 84.000</span>
-                     </div>
-                  </div>
-                  <button className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                    <ArrowRight className="h-5 w-5" />
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Offer Card 3 */}
-            <div className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-primary-500/10">
-              <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary-500 to-blue-500 transform origin-left scale-x-0 transition-transform group-hover:scale-x-100" />
-              <div className="absolute top-6 right-6 rounded-full bg-red-100 px-3 py-1 text-xs font-black tracking-wide text-red-600 line-through">
-                -25% OFF
-              </div>
-              
-              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                <ShieldCheck className="h-6 w-6" />
-              </div>
-              
-              <h3 className="text-2xl font-bold text-slate-900">Backend Node.js</h3>
-              <p className="mt-3 flex-1 text-slate-500 leading-relaxed">Arquitecturas robustas, APIs RESTful y microservicios listos para entornos empresariales.</p>
-              
-              <div className="mt-8 border-t border-slate-100 pt-6">
-                <div className="flex items-end justify-between">
-                  <div>
-                     <div className="text-sm font-medium text-slate-400 line-through mb-1">AR$ 140.000</div>
-                     <div className="flex items-center gap-2">
-                       <span className="text-3xl font-black text-slate-900">AR$ 105.000</span>
-                     </div>
-                  </div>
-                  <button className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                    <ArrowRight className="h-5 w-5" />
-                  </button>
-                </div>
-              </div>
-            </div>
-
+            ))}
           </div>
           
           <div className="mt-16 text-center">
@@ -228,13 +187,13 @@ export default function Home() {
                   },
                   {
                     name: "Valentina M.",
-                    role: "Backend Node.js en AwaZon",
+                    role: "Backend Node.js en Vualá",
                     text: "El acompañamiento de los tutores es increíble. Te empujan a dar más de vos y siempre están para destrabarte cuando no entendés un concepto complejo.",
                     image: "https://ui-avatars.com/api/?name=Valentina+M&background=2563eb&color=fff"
                   },
                   {
                     name: "Diego H.",
-                    role: "UX/UI Designer en Market Libre",
+                    role: "UX/UI Designer en PedidosNow",
                     text: "Poder diseñar productos digitales desde cero teniendo feedback de profesores que trabajan en la industria no tiene precio. El mejor retorno de inversión.",
                     image: "https://ui-avatars.com/api/?name=Diego+H&background=c026d3&color=fff"
                   },

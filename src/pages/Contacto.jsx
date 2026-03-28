@@ -9,6 +9,15 @@ export default function Contacto() {
     asunto: '',
     mensaje: ''
   });
+  const [openFaq, setOpenFaq] = useState(null);
+
+  const toggleFaq = (index) => {
+    if (openFaq === index) {
+      setOpenFaq(null);
+    } else {
+      setOpenFaq(index);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,10 +33,22 @@ export default function Contacto() {
   };
 
   const faqs = [
-    "¿Cuándo abren las inscripciones?",
-    "¿Necesito conocimientos previos?",
-    "¿Cómo funciona la garantía de devolución?",
-    "¿Hay un descuento por pago en efectivo?"
+    {
+      q: "¿Cuándo abren las inscripciones?",
+      a: "Nuestras inscripciones están abiertas todo el año. Puedes sumarte a la próxima camada en cualquier momento."
+    },
+    {
+      q: "¿Necesito conocimientos previos?",
+      a: "No, nuestros programas están diseñados para empezar desde cero. Solo necesitas dedicación y ganas de aprender."
+    },
+    {
+      q: "¿Cómo funciona la garantía de devolución?",
+      a: "Si dentro de los primeros 14 días sientes que el programa no es para ti, te devolvemos el 100% de tu dinero."
+    },
+    {
+      q: "¿Hay un descuento por pago en efectivo?",
+      a: "Sí, abonando el total de la carrera/curso por transferencia o depósito bancario, accedes a un 15% de descuento."
+    }
   ];
 
   return (
@@ -49,36 +70,35 @@ export default function Contacto() {
               <h2 className="text-2xl font-extrabold text-slate-900 mb-6">Información Directa</h2>
               
               <div className="space-y-6">
-                <div className="flex items-start gap-4">
+                <a href="mailto:admisiones@newtech.edu.ar" target="_blank" rel="noreferrer" className="flex items-start gap-4 group">
                   <div className="w-12 h-12 bg-primary-100 rounded-2xl flex items-center justify-center shrink-0">
                     <Mail className="w-6 h-6 text-primary-600" />
                   </div>
                   <div>
                     <h4 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">Email</h4>
-                    <p className="text-lg font-semibold text-slate-900">admisiones@newtech.edu.ar</p>
+                    <p className="text-lg font-semibold text-slate-900 transition-colors duration-300 group-hover:text-primary-600">admisiones@newtech.edu.ar</p>
                   </div>
-                </div>
+                </a>
                 
-                <div className="flex items-start gap-4">
+                <a href="https://wa.me/5491112345678" target="_blank" rel="noreferrer" className="flex items-start gap-4 group">
                   <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center shrink-0">
                     <PhoneCall className="w-6 h-6 text-emerald-600" />
                   </div>
                   <div>
                     <h4 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">WhatsApp</h4>
-                    <p className="text-lg font-semibold text-slate-900">+54 9 11 1234-5678</p>
-                    <p className="text-sm text-slate-500 mt-1">Lunes a Viernes de 9 a 18hs</p>
+                    <p className="text-lg font-semibold text-slate-900 transition-colors duration-300 group-hover:text-primary-600">+54 9 11 1234-5678</p>
                   </div>
-                </div>
+                </a>
                 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-slate-200 rounded-2xl flex items-center justify-center shrink-0">
-                    <MapPin className="w-6 h-6 text-slate-600" />
+                <a href="https://instagram.com/newtech.edu" target="_blank" rel="noreferrer" className="flex items-start gap-4 group">
+                  <div className="w-12 h-12 bg-pink-100 rounded-2xl flex items-center justify-center shrink-0">
+                    <MapPin className="w-6 h-6 text-pink-600" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">Oficinas (Solo Staff)</h4>
-                    <p className="text-lg font-semibold text-slate-900">Av. Siempre Viva 742, Buenos Aires</p>
+                    <h4 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">Instagram</h4>
+                    <p className="text-lg font-semibold text-slate-900 transition-colors duration-300 group-hover:text-primary-600">@newtech.edu</p>
                   </div>
-                </div>
+                </a>
               </div>
             </div>
 
@@ -88,10 +108,22 @@ export default function Contacto() {
               </h3>
               <div className="space-y-3">
                 {faqs.map((faq, i) => (
-                  <button key={i} className="w-full text-left bg-white border border-slate-200 hover:border-primary-300 hover:bg-primary-50 px-5 py-4 rounded-xl text-slate-700 font-semibold transition-colors group flex justify-between items-center">
-                    {faq}
-                    <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-primary-500 transition-transform group-hover:translate-x-1" />
-                  </button>
+                  <div key={i} className="border border-slate-200 rounded-xl overflow-hidden bg-white">
+                    <button 
+                      onClick={() => toggleFaq(i)}
+                      className="cursor-pointer w-full text-left hover:bg-primary-50 px-5 py-4 text-slate-700 font-semibold transition-colors flex justify-between items-center group"
+                    >
+                      {faq.q}
+                      <ArrowRight className={`w-4 h-4 text-slate-400 transition-transform ${openFaq === i ? 'rotate-90 text-primary-500' : 'group-hover:text-primary-500'}`} />
+                    </button>
+                    <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${openFaq === i ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+                      <div className="overflow-hidden">
+                        <div className="px-5 pb-4 text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-3">
+                          {faq.a}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
@@ -149,7 +181,7 @@ export default function Contacto() {
                   ></textarea>
                 </div>
 
-                <button type="submit" className="w-full bg-primary-600 text-white font-extrabold py-5 rounded-xl hover:bg-primary-500 hover:shadow-xl hover:shadow-primary-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                <button type="submit" className="cursor-pointer w-full bg-primary-600 text-white font-extrabold py-5 rounded-xl hover:bg-primary-500 hover:shadow-xl hover:shadow-primary-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
                   <Send className="w-5 h-5" /> Enviar mensaje
                 </button>
               </form>

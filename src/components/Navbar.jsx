@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Menu, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { carrerasData } from '../data/carreras';
 
 export default function Navbar() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-slate-950/80 backdrop-blur-md">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -15,7 +18,7 @@ export default function Navbar() {
           </Link>
         </div>
         
-        <div className="hidden md:flex items-center space-x-10">
+        <div className="hidden min-[900px]:flex items-center space-x-10">
           <div className="relative group">
             <Link to="/carreras" className="flex items-center gap-1 text-sm font-semibold tracking-wide text-slate-300 group-hover:text-white transition-colors py-4">
               Carreras <ChevronDown className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />
@@ -67,11 +70,6 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center space-x-5">
-          <button className="group flex h-11 w-11 items-center justify-center rounded-full hover:bg-white/10 transition-colors relative">
-            <ShoppingCart className="h-5 w-5 text-slate-300 group-hover:text-white transition-colors" />
-            <span className="absolute top-2 right-2 flex h-4 w-4 items-center justify-center rounded-full bg-primary-500 text-[10px] font-bold text-white ring-2 ring-slate-950">0</span>
-          </button>
-          
           <Link 
             to="/carreras"
             className="hidden sm:inline-flex h-11 items-center justify-center rounded-full bg-white px-7 text-sm font-bold text-slate-950 transition-all hover:bg-slate-200 hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_20px_rgba(255,255,255,0.1)]"
@@ -79,9 +77,33 @@ export default function Navbar() {
             ¡Comenzá a estudiar ya!
           </Link>
 
-          <button className="md:hidden flex h-11 w-11 items-center justify-center rounded-full text-slate-300 hover:bg-white/10">
-            <Menu className="h-6 w-6" />
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="cursor-pointer min-[900px]:hidden flex h-11 w-11 items-center justify-center rounded-full text-slate-300 hover:bg-white/10 transition-colors"
+          >
+            <div className={`transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-90' : 'rotate-0'}`}>
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </div>
           </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu Dropdown */}
+      <div 
+        className={`min-[900px]:hidden absolute left-0 top-full w-full bg-slate-950/95 backdrop-blur-xl border-b border-slate-800 transition-all duration-300 ease-in-out overflow-hidden ${
+          isMobileMenuOpen ? 'max-h-[500px] opacity-100 border-opacity-100 shadow-2xl shadow-black' : 'max-h-0 opacity-0 border-opacity-0'
+        }`}
+      >
+        <div className="flex flex-col px-4 py-6 space-y-2">
+          <Link to="/carreras" onClick={() => setIsMobileMenuOpen(false)} className="px-4 py-3 text-lg font-semibold text-white hover:bg-white/5 rounded-xl transition-colors">Carreras</Link>
+          <Link to="/cursos" onClick={() => setIsMobileMenuOpen(false)} className="px-4 py-3 text-lg font-semibold text-white hover:bg-white/5 rounded-xl transition-colors">Cursos</Link>
+          <Link to="/nosotros" onClick={() => setIsMobileMenuOpen(false)} className="px-4 py-3 text-lg font-semibold text-white hover:bg-white/5 rounded-xl transition-colors">Sobre Nosotros</Link>
+          <Link to="/contacto" onClick={() => setIsMobileMenuOpen(false)} className="px-4 py-3 text-lg font-semibold text-white hover:bg-white/5 rounded-xl transition-colors">Contacto</Link>
+          <div className="pt-4 mt-2 border-t border-slate-800 px-4">
+             <Link to="/carreras" onClick={() => setIsMobileMenuOpen(false)} className="flex w-full h-12 items-center justify-center rounded-full bg-primary-600 text-base font-bold text-white transition-all hover:bg-primary-500 shadow-lg shadow-primary-500/20">
+               ¡Comenzá a estudiar ya!
+             </Link>
+          </div>
         </div>
       </div>
     </nav>

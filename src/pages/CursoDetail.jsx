@@ -1,5 +1,5 @@
 import { useParams, Navigate, Link } from 'react-router-dom';
-import { ArrowLeft, CheckCircle2, Video, Clock, BarChart as ChartIcon, ShoppingCart, Target, Code2, LineChart, Palette, BookOpen, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Video, Clock, BarChart as ChartIcon, Target, Code2, LineChart, Palette, BookOpen, ShieldCheck } from 'lucide-react';
 import { cursosData } from '../data/cursos';
 
 export default function CursoDetail() {
@@ -158,10 +158,9 @@ export default function CursoDetail() {
                   </div>
                 </div>
                 
-                <button className="w-full rounded-2xl bg-slate-950 py-5 text-lg font-bold text-white transition-all hover:bg-primary-600 shadow-xl shadow-slate-900/20 active:scale-[0.98] flex items-center justify-center gap-3">
-                  <ShoppingCart className="w-5 h-5" />
-                  Sumar al carrito
-                </button>
+                <Link to={`/checkout/curso/${curso.id}`} className="w-full inline-flex justify-center rounded-2xl bg-primary-600 py-4 text-lg font-bold text-white transition-colors hover:bg-primary-500 shadow-md active:scale-[0.98]">
+                  Inscribirme ahora
+                </Link>
                 
                 <p className="text-sm font-medium text-slate-400 mt-6 text-center flex items-center justify-center gap-1.5">
                   <ShieldCheck className="w-4 h-4" /> Pago 100% seguro y garantizado

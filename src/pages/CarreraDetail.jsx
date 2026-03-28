@@ -10,7 +10,7 @@ const CourseAccordion = ({ course, index, total }) => {
     <div className="mb-4 overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all shadow-sm">
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between p-5 text-left font-bold text-slate-800 transition-colors hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-inset"
+        className="cursor-pointer flex w-full items-center justify-between p-5 text-left font-bold text-slate-800 transition-colors hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-inset"
       >
         <div className="flex items-center gap-4">
           <span className="flex h-8 items-center justify-center rounded-lg bg-orange-100 px-3 text-xs font-bold text-orange-800">
@@ -126,7 +126,7 @@ export default function CarreraDetail() {
             </div>
             
             <div className="flex justify-center md:justify-start">
-              <button className="flex items-center justify-center gap-3 rounded-full bg-[#201008] px-8 py-4 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-lg shadow-md">
+              <button className="cursor-pointer flex items-center justify-center gap-3 rounded-full bg-[#201008] px-8 py-4 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:shadow-lg shadow-md">
                 <Download className="w-4 h-4" />
                 Descargar programa de la carrera
               </button>
@@ -152,7 +152,8 @@ export default function CarreraDetail() {
                   </p>
                   
                   <div className="text-5xl font-black text-slate-900 tracking-tight mb-2">
-                    ${(carrera.finalPrice / 6).toLocaleString('es-AR', {maximumFractionDigits: 0})} ARS
+                    ${(carrera.finalPrice / 6).toLocaleString('es-AR', {maximumFractionDigits: 0})}
+                    <span className="text-2xl text-slate-500 font-medium ml-2">ARS</span>
                   </div>
                   
                   <p className="text-lg text-slate-500 mb-8 pb-8 border-b border-slate-100">
@@ -160,9 +161,9 @@ export default function CarreraDetail() {
                   </p>
                 </div>
                 
-                <button className="w-full rounded-2xl bg-primary-600 py-4 text-lg font-bold text-white transition-colors hover:bg-primary-500 shadow-md">
+                <Link to={`/checkout/carrera/${carrera.id}`} className="w-full inline-flex justify-center rounded-2xl bg-primary-600 py-4 text-lg font-bold text-white transition-colors hover:bg-primary-500 shadow-md">
                   Inscribirme ahora
-                </button>
+                </Link>
                 
                 <p className="text-sm font-medium text-slate-400 mt-4 text-center">
                   <ShieldCheck className="w-4 h-4 inline-block mr-1 -mt-0.5" />
